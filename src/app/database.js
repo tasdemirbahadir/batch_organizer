@@ -1,6 +1,5 @@
 import config from "config";
 import mongoose from "mongoose";
-import debug from "debug";
 
 const init = () => {
   const mongoUrl = process.env.DATABASE_URL
