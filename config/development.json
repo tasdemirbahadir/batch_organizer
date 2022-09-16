@@ -1,0 +1,7 @@
+{
+  "name": "Server Developement",
+  "database": "localhost:27017/batch_organizer",
+  "databaseUserName": "mongo",
+  "databasePassword": "mongo",
+  "port": 3000
+}

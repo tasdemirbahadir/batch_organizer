@@ -1,0 +1,65 @@
+{
+  "name": "batch_organizer",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "babel src -d dist --source-maps",
+    "serve": "NODE_ENV=production node dist/app/server.js",
+    "start": "NODE_ENV=development babel-node src/app/server.js",
+    "dev": "DEBUG=server:debug NODE_ENV=development nodemon src/app/server.js --exec babel-node",
+    "test": "DEBUG=server:debug NODE_ENV=test mocha --recursive ./**/*.spec.js --delay --require babel-core/register --reporter spec --exit   tests/** --exec babel-node",
+    "test:watch": "DEBUG=server:debug NODE_ENV=development mocha --recursive  --require babel-core/register --watch --reporter  spec   tests/** --exec babel-node",
+    "eslint": "eslint src/**/*.js --ignore-pattern \"node_modules/\""
+  },
+  "description": "Batch Organizer",
+  "main": "server.js",
+  "author": "bahadir.tasdemir",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-node8": "^1.2.0",
+    "chai": "^4.3.6",
+    "config": "^3.3.8",
+    "debug": "^4.3.4",
+    "mocha": "^10.0.0",
+    "mocha-prepare": "^0.1.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4",
+    "mongo-unit": "^3.2.0"
+  },
+  "babel": {
+    "presets": [
+      "node8"
+    ]
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "node"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:node/recommended"
+    ],
+    "rules": {
+      "node/no-unsupported-features/es-syntax": 0,
+      "node/no-unsupported-features/es-builtins": 0
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2018
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "chai-http": "^4.3.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.0",
+    "mongoose-paginate": "^5.0.3"
+  }
+}
