@@ -9,7 +9,7 @@ const init = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.json({ type: "application/json" }));
   app.get("/", (req, res) =>
-    res.json({ message: "Welcome to the Batch Organizer!" })
+    res.json({ message: "Welcome to the Batch Organizer!!" })
   );
   app.route("/batches").post(batches.postBatch).get(batches.getBatches);
   app.route("/batches/organized").get(organizedBatches.getOrganizedBatches);
