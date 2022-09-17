@@ -21,7 +21,7 @@ jobs:
               sudo fuser -k 3000/tcp;
               yarn;
               yarn build;
-              nohup yarn serve >/dev/null 2>&1;"
+              nohup yarn serve 1>/dev/null 2>/dev/null &;"
 
 workflows:
   test-and-deploy:
