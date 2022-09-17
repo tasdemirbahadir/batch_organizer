@@ -15,13 +15,13 @@ jobs:
           name: Deploy to AWS
           command: |
             ssh ec2-user@52.32.105.241 \
-              "cd /home/ec2-user/batch-organizer/batch_organizer && \
-              git pull && \
-              rm -rf node_modules && \
-              sudo fuser -k 3000/tcp && \
-              yarn && \
-              yarn build && \
-              nohup yarn serve&"
+              "cd /home/ec2-user/batch-organizer/batch_organizer; \
+              git pull; \
+              rm -rf node_modules; \
+              sudo fuser -k 3000/tcp; \
+              yarn; \
+              yarn build; \
+              nohup yarn serve &;"
 
 workflows:
   test-and-deploy:
