@@ -10,7 +10,7 @@ jobs:
         pkg-manager: yarn
   deploy:
     steps:
-      - run:
+      run:
         command: ssh -i ec2-user@52.32.105.241
         command: cd /home/ec2-user/batch-organizer/batch_organizer
         command: git pull
