@@ -18,9 +18,10 @@ jobs:
               "cd /home/ec2-user/batch-organizer/batch_organizer && \
               git pull && \
               rm -rf node_modules && \
-              yarn global add babel-cli && \
+              sudo fuser -k 3000/tcp && \
+              yarn && \
               yarn build && \
-              yarn serve;"
+              nohup yarn serve&"
 
 workflows:
   test-and-deploy:
