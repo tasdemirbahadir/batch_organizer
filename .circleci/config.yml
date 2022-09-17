@@ -18,6 +18,7 @@ jobs:
               "cd /home/ec2-user/batch-organizer/batch_organizer && \
               git pull && \
               rm -rf node_modules && \
+              yarn global add babel-cli && \
               yarn build && \
               yarn serve;"
 
