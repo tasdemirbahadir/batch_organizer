@@ -10,11 +10,11 @@ workflows:
       - node/test:
           version: '16.10'
           pkg-manager: yarn
-      - node/deploy
-          commands:
-            - ssh -i ec2-user@52.32.105.241
-            - cd /home/ec2-user/batch-organizer/batch_organizer
-            - git pull
-            - rm -rf node_modules
-            - yarn build
-            - yarn serve
+      - deploy
+        - run:
+          command: ssh -i ec2-user@52.32.105.241
+          command: cd /home/ec2-user/batch-organizer/batch_organizer
+          command: git pull
+          command: rm -rf node_modules
+          command: yarn build
+          command: yarn serve
