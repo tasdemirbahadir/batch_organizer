@@ -15,9 +15,8 @@ const getBatches = (req, res) => {
   const page = req.query.page ? req.query.page : DEFAULT_PAGE;
   const limit = req.query.size ? req.query.size : DEFAULT_PAGE_SIZE;
   const offset = page * limit;
-
-  batchDataModel.paginate({}, { offset, limit })
-    .then(result => {
+  batchDataModel.paginate({}, { offset, limit }).then(
+    (result) => {
       const response = {
         items: result.docs,
         total: result.total,
@@ -25,11 +24,13 @@ const getBatches = (req, res) => {
         page: result.offset / result.limit,
       };
       res.json(response);
-    }, err => {
+    },
+    (err) => {
       console.error("Error occured: ", err);
       res.status(500);
       res.json({ errors: "Unexpected error occurred" });
-    });
+    }
+  );
 };
 
 const postBatch = (req, res) => {
@@ -81,8 +82,24 @@ const postBatch = (req, res) => {
 
 const getGetBatchesBadRequestErrors = (req) => {
   let badRequestErrors = [];
-  if (req.query.size && req.query.size > 20) {
-    badRequestErrors.push("Max page size is 20");
+  if (req.query.size) {
+    if (isNaN(req.query.size)) {
+      badRequestErrors.push("Page size value must be a number");
+    } else {
+      if (req.query.size > 20) {
+        badRequestErrors.push("Max page size is 20");
+      }
+      if (req.query.size < 1) {
+        badRequestErrors.push("Min page size is 1");
+      }
+    }
+  }
+  if (req.query.page) {
+    if (isNaN(req.query.page)) {
+      badRequestErrors.push("Page value must be a number");
+    } else if (req.query.page < 0) {
+      badRequestErrors.push("Min page value is 0");
+    }
   }
   return badRequestErrors;
 };
