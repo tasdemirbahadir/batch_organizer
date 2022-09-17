@@ -21,3 +21,7 @@
 
 1) Install circleci validation tool here <https://circleci.com/docs/local-cli>
 2) run comman `circleci config validate`
+
+## CI/CD Status
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/tasdemirbahadir/batch_organizer/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/tasdemirbahadir/batch_organizer/tree/master)
