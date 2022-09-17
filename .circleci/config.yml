@@ -3,24 +3,9 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
 
-jobs:
-  test:
-    - node/test:
-        version: '16.10'
-        pkg-manager: yarn
-  deploy:
-    steps:
-      run:
-        command: ssh -i ec2-user@52.32.105.241
-        command: cd /home/ec2-user/batch-organizer/batch_organizer
-        command: git pull
-        command: rm -rf node_modules
-        command: yarn build
-        command: yarn serve
-
 workflows:
-  version: 2
-  build-deploy:
+  sample:
     jobs:
-      - test:
-      - deploy:
+      - node/test:
+          version: '16.10'
+          pkg-manager: yarn
