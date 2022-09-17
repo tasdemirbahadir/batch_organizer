@@ -8,10 +8,13 @@ jobs:
     machine:
       enabled: true
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "bc:cf:9a:cd:d4:3e:4e:fc:de:99:88:5c:fa:96:98:f6"
       - run:
           name: Deploy to AWS
           command: |
-            ssh -i ec2-user@52.32.105.241; \
+            ssh ec2-user@52.32.105.241; \
               cd /home/ec2-user/batch-organizer/batch_organizer; \
               git pull; \
               rm -rf node_modules; \
@@ -19,11 +22,9 @@ jobs:
               yarn serve; \
 
 workflows:
-  test:
+  test-and-deploy:
     jobs:
       - node/test:
           version: '16.10'
           pkg-manager: yarn
-  deploy:
-    jobs:
       - deploy
