@@ -17,3 +17,7 @@
 
 `sh env/teardown.sh;`
 
+## Validate circle-ci config
+
+1) Install circleci validation tool here <https://circleci.com/docs/local-cli>
+2) run comman `circleci config validate`

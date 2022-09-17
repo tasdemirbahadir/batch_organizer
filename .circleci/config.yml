@@ -15,11 +15,11 @@ jobs:
           name: Deploy to AWS
           command: |
             ssh ec2-user@52.32.105.241 \
-              cd /home/ec2-user/batch-organizer/batch_organizer; \
-              git pull; \
-              rm -rf node_modules; \
-              yarn build; \
-              yarn serve; \
+              "cd /home/ec2-user/batch-organizer/batch_organizer && \
+              git pull && \
+              rm -rf node_modules && \
+              yarn build && \
+              yarn serve;"
 
 workflows:
   test-and-deploy:
