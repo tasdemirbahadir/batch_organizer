@@ -42,7 +42,7 @@ const postBatchData = (req, res) => {
   }
 
   const newBatchData = new batchDataModel({
-    batch_id: req.headers.batch_id,
+    batch_id: req.body.batchId,
     value: req.body.number,
     time: new Date(),
   });
@@ -110,18 +110,18 @@ const getGetBatchesBadRequestErrors = (req) => {
 
 const getPostBatchBadRequestErrors = (req) => {
   let badRequestErrors = [];
-  if (!req.headers.batch_id) {
+  if (!req.body.batchId) {
     badRequestErrors.push(
-      "Batch ID doesn't exist in header with the key 'batch_id'. Sample header: batch_id=<string_val>"
+      "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
   }
   if (!req.body.number) {
     badRequestErrors.push(
-      "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }"
+      "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
   } else if (isNaN(req.body.number)) {
     badRequestErrors.push(
-      "The value of data 'number' must be type of number. Sample body: { number: <number_val> }"
+      "The value of data 'number' must be type of number. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
   }
   return badRequestErrors;

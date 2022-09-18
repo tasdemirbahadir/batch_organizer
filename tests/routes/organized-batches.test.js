@@ -32,8 +32,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_1")
-        .send({ number: 1 })
+        .send({ batchId: "BATCH_ID_1", number: 1 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -44,8 +43,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_1")
-        .send({ number: 9 })
+        .send({ batchId: "BATCH_ID_1", number: 9 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -56,8 +54,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_2")
-        .send({ number: 103 })
+        .send({ batchId: "BATCH_ID_2", number: 103 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -68,8 +65,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_3")
-        .send({ number: 18 })
+        .send({ batchId: "BATCH_ID_3", number: 18 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -80,8 +76,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_3")
-        .send({ number: 13 })
+        .send({ batchId: "BATCH_ID_3", number: 13 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -92,8 +87,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_1")
-        .send({ number: 5 })
+        .send({ batchId: "BATCH_ID_1", number: 5 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -104,8 +98,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_3")
-        .send({ number: 14 })
+        .send({ batchId: "BATCH_ID_3", number: 14 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");
@@ -116,8 +109,7 @@ describe("Organized Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_2")
-        .send({ number: 101 })
+        .send({ batchId: "BATCH_ID_2", number: 101 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");

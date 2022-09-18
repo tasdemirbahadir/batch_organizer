@@ -15,7 +15,7 @@ describe("Batches", () => {
     done();
   });
   describe("/POST batch", () => {
-    it("should POST batch data and response bad request when batch id is missing in header", (done) => {
+    it("should POST batch data and response bad request when batch id is missing in body", (done) => {
       chai
         .request(server)
         .post("/batch-data")
@@ -24,7 +24,7 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "Batch ID doesn't exist in header with the key 'batch_id'. Sample header: batch_id=<string_val>"
+            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
           );
           done();
         });
@@ -33,12 +33,12 @@ describe("Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_1")
+        .send({ batchId: "BATCH_ID" })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }"
+            "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
           );
           done();
         });
@@ -47,18 +47,17 @@ describe("Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .send({ number: "NaN" })
-        .set("batch_id", "BATCH_ID_1")
+        .send({ batchId: "BATCH_ID", number: "NaN" })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "The value of data 'number' must be type of number. Sample body: { number: <number_val> }"
+            "The value of data 'number' must be type of number. Sample body: { batchId: <string_val>, number: <number_val> }"
           );
           done();
         });
     });
-    it("should POST batch data and response bad request errors when number field is missing in body and batch id is missing in header", (done) => {
+    it("should POST batch data and response bad request errors when number field is missing in body and batch id is missing in body", (done) => {
       chai
         .request(server)
         .post("/batch-data")
@@ -66,8 +65,8 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(2);
           expect(res.body.errors).to.have.members([
-            "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }",
-            "Batch ID doesn't exist in header with the key 'batch_id'. Sample header: batch_id=<string_val>",
+            "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }",
+            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }",
           ]);
           done();
         });
@@ -76,8 +75,7 @@ describe("Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .set("batch_id", "BATCH_ID_1")
-        .send({ number: 1 })
+        .send({ batchId: "BATCH_ID_1", number: 1 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");

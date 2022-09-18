@@ -6,6 +6,7 @@ import organizedBatches from "./routes/organized-batches-route";
 
 const init = () => {
   const app = express();
+  const router = express.Router;
   app.use(bodyParser.json());
   app.use(bodyParser.json({ type: "application/json" }));
   app.get("/", (req, res) =>
