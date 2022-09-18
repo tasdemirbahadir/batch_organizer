@@ -1,4 +1,4 @@
-import { organizedBatchesModel } from "../models/organized-batches-model";
+import { paginate } from "../adaptors/organized-batches-adaptor";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;
@@ -8,20 +8,7 @@ const getOrganizedBatches = async (page, size, response) => {
   const limit = size ? size : DEFAULT_PAGE_SIZE;
   const skip = pageVal * limit;
   try {
-    let organizedBatches = await organizedBatchesModel
-      .aggregate()
-      .allowDiskUse(true)
-      .unwind({ path: "$values" })
-      .group({
-        _id: null,
-        total: { $sum: 1 },
-        data: { $push: "$values" },
-      })
-      .project({
-        total: 1,
-        items: { $slice: ["$data", skip, limit] },
-      })
-      .exec();
+    let organizedBatches = await paginate(skip, limit);
     response.status(200);
     if (!organizedBatches || !organizedBatches.length) {
       response.json({

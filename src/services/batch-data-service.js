@@ -1,4 +1,4 @@
-import { batchDataModel } from "../models/batch-data-model";
+import { paginate, save } from "../adaptors/batch-data-adaptor";
 
 const debug = require("debug")("server:debug");
 const DEFAULT_PAGE = 0;
@@ -9,7 +9,7 @@ const getBatchDatas = async (page, size, response) => {
   const limit = size ? size : DEFAULT_PAGE_SIZE;
   const offset = pageVal * limit;
   try {
-    const batchDatas = await batchDataModel.paginate({}, { offset, limit });
+    const batchDatas = await paginate(offset, limit);
     const responsePageVal = batchDatas.offset / batchDatas.limit;
     response.json({
       items: batchDatas.docs,
@@ -25,25 +25,8 @@ const getBatchDatas = async (page, size, response) => {
 };
 
 const postBatchData = async (batchData, response) => {
-  const newBatchData = new batchDataModel(batchData);
   try {
-    await newBatchData.save();
-    const result = await batchDataModel
-      .aggregate()
-      .allowDiskUse(true)
-      .sort({ value: 1 })
-      .group({
-        _id: { $getField: "batch_id" },
-        time: { $min: { $getField: "time" } },
-        values: { $push: { $getField: "value" } },
-      })
-      .sort({ time: 1 })
-      .unwind({ path: "$values" })
-      .group({
-        _id: "VALUES",
-        values: { $push: "$values" },
-      })
-      .out("organizedbatches");
+    const result = await save(batchData);
     debug(`Process took: ${result}`);
     response.status(201);
     response.json({ result: "SUCCESS" });
