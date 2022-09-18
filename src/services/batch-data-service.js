@@ -4,20 +4,18 @@ const debug = require("debug")("server:debug");
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;
 
-const getBatchDatas = async (request, response) => {
-  const page = Number(request.query.page ? request.query.page : DEFAULT_PAGE);
-  const limit = Number(
-    request.query.size ? request.query.size : DEFAULT_PAGE_SIZE
-  );
-  const offset = page * limit;
+const getBatchDatas = async (page, size, response) => {
+  const pageVal = page ? page : DEFAULT_PAGE;
+  const limit = size ? size : DEFAULT_PAGE_SIZE;
+  const offset = pageVal * limit;
   try {
     const batchDatas = await batchDataModel.paginate({}, { offset, limit });
-    const page = batchDatas.offset / batchDatas.limit;
+    const responsePageVal = batchDatas.offset / batchDatas.limit;
     response.json({
       items: batchDatas.docs,
       total: batchDatas.total,
       size: batchDatas.docs.length,
-      page,
+      page: responsePageVal,
     });
   } catch (error) {
     console.error("Error occured: ", error);
@@ -26,12 +24,8 @@ const getBatchDatas = async (request, response) => {
   }
 };
 
-const postBatchData = async (request, response) => {
-  const newBatchData = new batchDataModel({
-    batch_id: request.body.batchId,
-    value: request.body.number,
-    time: new Date(),
-  });
+const postBatchData = async (batchData, response) => {
+  const newBatchData = new batchDataModel(batchData);
   try {
     await newBatchData.save();
     const result = await batchDataModel

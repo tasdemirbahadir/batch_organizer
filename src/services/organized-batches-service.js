@@ -3,12 +3,10 @@ import { organizedBatchesModel } from "../models/organized-batches-model";
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;
 
-const getOrganizedBatches = async (request, response) => {
-  const page = Number(request.query.page ? request.query.page : DEFAULT_PAGE);
-  const limit = Number(
-    request.query.size ? request.query.size : DEFAULT_PAGE_SIZE
-  );
-  const skip = page * limit;
+const getOrganizedBatches = async (page, size, response) => {
+  const pageVal = page ? page : DEFAULT_PAGE;
+  const limit = size ? size : DEFAULT_PAGE_SIZE;
+  const skip = pageVal * limit;
   try {
     let organizedBatches = await organizedBatchesModel
       .aggregate()
@@ -34,12 +32,12 @@ const getOrganizedBatches = async (request, response) => {
       });
     } else {
       organizedBatches = JSON.parse(JSON.stringify(organizedBatches));
-      const page = skip / limit;
+      const responsePageVal = skip / limit;
       response.json({
         items: organizedBatches[0].items,
         total: organizedBatches[0].total,
         size: organizedBatches[0].items.length,
-        page: page,
+        page: responsePageVal,
       });
     }
   } catch (error) {
