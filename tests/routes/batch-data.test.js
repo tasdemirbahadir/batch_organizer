@@ -7,7 +7,7 @@ let server;
 chai.use(chaiHttp);
 describe("Batches", () => {
   before((done) => {
-    server = require("../../src/app/server");
+    server = require("../../src/server");
     done();
   });
   after((done) => {

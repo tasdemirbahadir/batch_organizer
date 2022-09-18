@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-let organizedBatches = new Schema(
+const organizedBatches = new Schema(
   {
     data: { type: Array, required: true },
   },
@@ -9,8 +9,9 @@ let organizedBatches = new Schema(
     versionKey: false,
   }
 );
-
-module.exports.organizedBatchesModel = mongoose.model(
+const organizedBatchesModel = mongoose.model(
   "organizedBatches",
   organizedBatches
 );
+
+module.exports = { organizedBatchesModel };

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-let Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-let batchData = new Schema(
+const batchData = new Schema(
   {
     batch_id: { type: String, required: true },
     value: { type: Number, required: true },
@@ -14,5 +14,6 @@ let batchData = new Schema(
   }
 );
 batchData.plugin(mongoosePaginate);
+const batchDataModel = mongoose.model("batchData", batchData);
 
-module.exports.batchDataModel = mongoose.model("batchData", batchData);
+module.exports = { batchDataModel };

@@ -1,4 +1,4 @@
-import { batchDataModel } from "../models/batch-data";
+import { batchDataModel } from "../models/batch-data-model";
 
 const debug = require("debug")("server:debug");
 const DEFAULT_PAGE = 0;

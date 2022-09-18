@@ -1,4 +1,4 @@
-import { organizedBatchesModel } from "../models/organized-batches";
+import { organizedBatchesModel } from "../models/organized-batches-model";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;

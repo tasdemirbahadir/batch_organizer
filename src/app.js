@@ -1,8 +1,8 @@
 import config from "config";
 import express from "express";
 import bodyParser from "body-parser";
-import batchData from "./routes/batch-data";
-import organizedBatches from "./routes/organized-batches";
+import batchData from "./routes/batch-data-route";
+import organizedBatches from "./routes/organized-batches-route";
 
 const init = () => {
   const app = express();
