@@ -238,9 +238,7 @@ describe("Organized Batches", () => {
         })
         .end((err, res) => {
           expect(res.body.organizedBatches.length).to.equal(2);
-          expect(res.body.organizedBatches).to.have.ordered.members([
-            103, 13,
-          ]);
+          expect(res.body.organizedBatches).to.have.ordered.members([103, 13]);
           done();
         });
     });

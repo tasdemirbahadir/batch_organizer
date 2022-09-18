@@ -10,4 +10,7 @@ let organizedBatches = new Schema(
   }
 );
 
-module.exports.organizedBatchesModel = mongoose.model('organizedBatches', organizedBatches);
+module.exports.organizedBatchesModel = mongoose.model(
+  "organizedBatches",
+  organizedBatches
+);

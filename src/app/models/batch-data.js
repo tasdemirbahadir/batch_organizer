@@ -15,4 +15,4 @@ let batchData = new Schema(
 );
 batchData.plugin(mongoosePaginate);
 
-module.exports.batchDataModel = mongoose.model('batchData', batchData);
+module.exports.batchDataModel = mongoose.model("batchData", batchData);
