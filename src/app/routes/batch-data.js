@@ -17,7 +17,7 @@ const getBatchDatas = (req, res) => {
   const offset = page * limit;
   batchDataModel.paginate({}, { offset, limit }).then(
     (result) => {
-      const page = result.offset / result.limit
+      const page = result.offset / result.limit;
       res.json({
         items: result.docs,
         total: result.total,

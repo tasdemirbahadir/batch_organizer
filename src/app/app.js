@@ -11,7 +11,10 @@ const init = () => {
   app.get("/", (req, res) =>
     res.json({ message: "Welcome to the Batch Organizer!!" })
   );
-  app.route("/batch-data").post(batchData.postBatchData).get(batchData.getBatchDatas);
+  app
+    .route("/batch-data")
+    .post(batchData.postBatchData)
+    .get(batchData.getBatchDatas);
   app.route("/batches/organized").get(organizedBatches.getOrganizedBatches);
   const server = app.listen(config.get("port"), () => {
     console.log(
