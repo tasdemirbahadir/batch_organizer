@@ -14,7 +14,6 @@ const getOrganizedBatches = (req, res) => {
   const page = req.query.page ? req.query.page : DEFAULT_PAGE;
   const limit = req.query.size ? req.query.size : DEFAULT_PAGE_SIZE;
   const offset = page * limit;
-  console.log("offset", offset, "limit", limit);
   organizedBatchesModel
     .findOne({}, { values: { $slice: [Number(offset), Number(limit)] } })
     .exec()
@@ -25,8 +24,9 @@ const getOrganizedBatches = (req, res) => {
           res.json({ message: "Currently there aren't any batches" });
         } else {
           res.status(200);
+          organizedBatches = JSON.parse(JSON.stringify(organizedBatches));
           const response = {
-            organizedBatches,
+            organizedBatches: organizedBatches.values,
             page: offset / limit,
             size: limit,
           };

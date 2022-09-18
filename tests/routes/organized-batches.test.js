@@ -221,8 +221,8 @@ describe("Organized Batches", () => {
           size: 8,
         })
         .end((err, res) => {
-          expect(res.body.organizedBatches.values.length).to.equal(8);
-          expect(res.body.organizedBatches.values).to.have.ordered.members([
+          expect(res.body.organizedBatches.length).to.equal(8);
+          expect(res.body.organizedBatches).to.have.ordered.members([
             1, 5, 9, 101, 103, 13, 14, 18,
           ]);
           done();
@@ -237,8 +237,8 @@ describe("Organized Batches", () => {
           size: 2,
         })
         .end((err, res) => {
-          expect(res.body.organizedBatches.values.length).to.equal(2);
-          expect(res.body.organizedBatches.values).to.have.ordered.members([
+          expect(res.body.organizedBatches.length).to.equal(2);
+          expect(res.body.organizedBatches).to.have.ordered.members([
             103, 13,
           ]);
           done();
