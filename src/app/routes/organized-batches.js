@@ -30,8 +30,8 @@ const getOrganizedBatches = (req, res) => {
     .exec()
     .then(
       (organizedBatches) => {
+        res.status(200);
         if (!organizedBatches || !organizedBatches.length) {
-          res.status(200);
           res.json({
             items: [],
             total: 0,
@@ -39,7 +39,6 @@ const getOrganizedBatches = (req, res) => {
             page: 0,
           });
         } else {
-          res.status(200);
           organizedBatches = JSON.parse(JSON.stringify(organizedBatches));
           const page = skip / limit;
           res.json({
