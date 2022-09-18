@@ -4,21 +4,23 @@ const debug = require("debug")("server:debug");
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;
 
-const getBatchDatas = (req, res) => {
-  const badRequestErrors = getGetBatchesBadRequestErrors(req);
+const getBatchDatas = (request, response) => {
+  const badRequestErrors = getGetBatchesBadRequestErrors(request);
   if (badRequestErrors.length) {
-    res.status(400);
-    res.json({ errors: badRequestErrors });
+    response.status(400);
+    response.json({ errors: badRequestErrors });
     return;
   }
 
-  const page = Number(req.query.page ? req.query.page : DEFAULT_PAGE);
-  const limit = Number(req.query.size ? req.query.size : DEFAULT_PAGE_SIZE);
+  const page = Number(request.query.page ? request.query.page : DEFAULT_PAGE);
+  const limit = Number(
+    request.query.size ? request.query.size : DEFAULT_PAGE_SIZE
+  );
   const offset = page * limit;
   batchDataModel.paginate({}, { offset, limit }).then(
     (result) => {
       const page = result.offset / result.limit;
-      res.json({
+      response.json({
         items: result.docs,
         total: result.total,
         size: result.docs.length,
@@ -27,23 +29,23 @@ const getBatchDatas = (req, res) => {
     },
     (err) => {
       console.error("Error occured: ", err);
-      res.status(500);
-      res.json({ errors: "Unexpected error occurred" });
+      response.status(500);
+      response.json({ errors: "Unexpected error occurred" });
     }
   );
 };
 
-const postBatchData = (req, res) => {
-  const badRequestErrors = getPostBatchBadRequestErrors(req);
+const postBatchData = (request, response) => {
+  const badRequestErrors = getPostBatchBadRequestErrors(request);
   if (badRequestErrors.length) {
-    res.status(400);
-    res.json({ errors: badRequestErrors });
+    response.status(400);
+    response.json({ errors: badRequestErrors });
     return;
   }
 
   const newBatchData = new batchDataModel({
-    batch_id: req.body.batchId,
-    value: req.body.number,
+    batch_id: request.body.batchId,
+    value: request.body.number,
     time: new Date(),
   });
   return newBatchData
@@ -73,53 +75,53 @@ const postBatchData = (req, res) => {
     .then(
       (result) => {
         debug(`Process took: ${result}`);
-        res.status(201);
-        res.json({ result: "SUCCESS" });
+        response.status(201);
+        response.json({ result: "SUCCESS" });
       },
       (err) => {
         console.error("Error occured: ", err);
-        res.status(500);
-        res.json({ errors: "Unexpected error occurred" });
+        response.status(500);
+        response.json({ errors: "Unexpected error occurred" });
       }
     );
 };
 
-const getGetBatchesBadRequestErrors = (req) => {
+const getGetBatchesBadRequestErrors = (request) => {
   let badRequestErrors = [];
-  if (req.query.size) {
-    if (isNaN(req.query.size)) {
+  if (request.query.size) {
+    if (isNaN(request.query.size)) {
       badRequestErrors.push("Page size value must be a number");
     } else {
-      if (req.query.size > 20) {
+      if (request.query.size > 20) {
         badRequestErrors.push("Max page size is 20");
       }
-      if (req.query.size < 1) {
+      if (request.query.size < 1) {
         badRequestErrors.push("Min page size is 1");
       }
     }
   }
-  if (req.query.page) {
-    if (isNaN(req.query.page)) {
+  if (request.query.page) {
+    if (isNaN(request.query.page)) {
       badRequestErrors.push("Page value must be a number");
-    } else if (req.query.page < 0) {
+    } else if (request.query.page < 0) {
       badRequestErrors.push("Min page value is 0");
     }
   }
   return badRequestErrors;
 };
 
-const getPostBatchBadRequestErrors = (req) => {
+const getPostBatchBadRequestErrors = (request) => {
   let badRequestErrors = [];
-  if (!req.body.batchId) {
+  if (!request.body.batchId) {
     badRequestErrors.push(
       "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
   }
-  if (!req.body.number) {
+  if (!request.body.number) {
     badRequestErrors.push(
       "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
-  } else if (isNaN(req.body.number)) {
+  } else if (isNaN(request.body.number)) {
     badRequestErrors.push(
       "The value of data 'number' must be type of number. Sample body: { batchId: <string_val>, number: <number_val> }"
     );
