@@ -49,6 +49,10 @@ const postBatchData = (req, res) => {
   return newBatchData
     .save()
     .then(() => {
+      /**
+       * In below aggregation, I am not sure if it will perform well with a high volume of data.
+       * It would be better to investiagte and test the code with a large amaount of data.
+       */
       return batchDataModel
         .aggregate()
         .allowDiskUse(true)

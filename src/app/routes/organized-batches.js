@@ -14,6 +14,10 @@ const getOrganizedBatches = (req, res) => {
   const page = Number(req.query.page ? req.query.page : DEFAULT_PAGE);
   const limit = Number(req.query.size ? req.query.size : DEFAULT_PAGE_SIZE);
   const skip = page * limit;
+  /**
+   * In below aggregation, I am not sure if it will perform well with a high volume of data.
+   * It would be better to investiagte and test the code with a large amaount of data.
+   */
   organizedBatchesModel
     .aggregate()
     .allowDiskUse(true)
