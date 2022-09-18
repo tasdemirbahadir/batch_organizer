@@ -26,9 +26,9 @@ const getOrganizedBatches = (req, res) => {
           res.status(200);
           organizedBatches = JSON.parse(JSON.stringify(organizedBatches));
           const response = {
-            organizedBatches: organizedBatches.values,
+            items: organizedBatches.values,
             page: offset / limit,
-            size: limit,
+            size: organizedBatches.values.length,
           };
           res.json(response);
         }

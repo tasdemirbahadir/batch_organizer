@@ -4,7 +4,7 @@ const debug = require("debug")("server:debug");
 const DEFAULT_PAGE = 0;
 const DEFAULT_PAGE_SIZE = 10;
 
-const getBatches = (req, res) => {
+const getBatchDatas = (req, res) => {
   const badRequestErrors = getGetBatchesBadRequestErrors(req);
   if (badRequestErrors.length) {
     res.status(400);
@@ -33,7 +33,7 @@ const getBatches = (req, res) => {
   );
 };
 
-const postBatch = (req, res) => {
+const postBatchData = (req, res) => {
   const badRequestErrors = getPostBatchBadRequestErrors(req);
   if (badRequestErrors.length) {
     res.status(400);
@@ -119,4 +119,4 @@ const getPostBatchBadRequestErrors = (req) => {
   return badRequestErrors;
 };
 
-module.exports = { postBatch, getBatches };
+module.exports = { postBatchData, getBatchDatas };

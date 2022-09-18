@@ -1,7 +1,7 @@
 import config from "config";
 import express from "express";
 import bodyParser from "body-parser";
-import batches from "./routes/batches";
+import batchData from "./routes/batch-data";
 import organizedBatches from "./routes/organized-batches";
 
 const init = () => {
@@ -11,7 +11,7 @@ const init = () => {
   app.get("/", (req, res) =>
     res.json({ message: "Welcome to the Batch Organizer!!" })
   );
-  app.route("/batches").post(batches.postBatch).get(batches.getBatches);
+  app.route("/batch-data").post(batchData.postBatchData).get(batchData.getBatchDatas);
   app.route("/batches/organized").get(organizedBatches.getOrganizedBatches);
   const server = app.listen(config.get("port"), () => {
     console.log(

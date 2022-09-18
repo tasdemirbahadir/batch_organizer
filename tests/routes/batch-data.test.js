@@ -15,10 +15,10 @@ describe("Batches", () => {
     done();
   });
   describe("/POST batch", () => {
-    it("should POST batch and response bad request when batch id is missing in header", (done) => {
+    it("should POST batch data and response bad request when batch id is missing in header", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .send({ number: 1 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -29,10 +29,10 @@ describe("Batches", () => {
           done();
         });
     });
-    it("should POST batch and response bad request when number field is missing in body", (done) => {
+    it("should POST batch data and response bad request when number field is missing in body", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_1")
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -43,10 +43,10 @@ describe("Batches", () => {
           done();
         });
     });
-    it("should POST batch and response bad request errors when number field is missing in body and batch id is missing in header", (done) => {
+    it("should POST batch data and response bad request errors when number field is missing in body and batch id is missing in header", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(2);
@@ -57,10 +57,10 @@ describe("Batches", () => {
           done();
         });
     });
-    it("should POST batch successfully", (done) => {
+    it("should POST batch data successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_1")
         .send({ number: 1 })
         .end((err, res) => {
@@ -74,7 +74,7 @@ describe("Batches", () => {
     it("should get max page size error", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: 0,
           size: 21,
@@ -89,7 +89,7 @@ describe("Batches", () => {
     it("should get min page size error", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: 0,
           size: 0,
@@ -104,7 +104,7 @@ describe("Batches", () => {
     it("should get min page value error", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: -1,
           size: 10,
@@ -119,7 +119,7 @@ describe("Batches", () => {
     it("should get min page size and min page value errors", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: -1,
           size: -1,
@@ -137,7 +137,7 @@ describe("Batches", () => {
     it("should get page value error when page value is not a number", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: "NaN",
           size: 10,
@@ -154,7 +154,7 @@ describe("Batches", () => {
     it("should get page value error when page size is not a number", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: 0,
           size: "NaN",
@@ -171,7 +171,7 @@ describe("Batches", () => {
     it("should get value errors when both page size and page value is not a number", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: "NaN",
           size: "NaN",
@@ -189,7 +189,7 @@ describe("Batches", () => {
     it("should GET posted batch successfully", (done) => {
       chai
         .request(server)
-        .get("/batches")
+        .get("/batch-data")
         .query({
           page: 0,
           size: 1,

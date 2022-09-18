@@ -18,7 +18,7 @@ describe("Organized Batches", () => {
     it("should POST first value of batch 1 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_1")
         .send({ number: 1 })
         .end((err, res) => {
@@ -30,7 +30,7 @@ describe("Organized Batches", () => {
     it("should POST second value of batch 1 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_1")
         .send({ number: 9 })
         .end((err, res) => {
@@ -42,7 +42,7 @@ describe("Organized Batches", () => {
     it("should POST first value of batch 2 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_2")
         .send({ number: 103 })
         .end((err, res) => {
@@ -54,7 +54,7 @@ describe("Organized Batches", () => {
     it("should POST first value of batch 3 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_3")
         .send({ number: 18 })
         .end((err, res) => {
@@ -66,7 +66,7 @@ describe("Organized Batches", () => {
     it("should POST second value of batch 3 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_3")
         .send({ number: 13 })
         .end((err, res) => {
@@ -78,7 +78,7 @@ describe("Organized Batches", () => {
     it("should POST third value of batch 1 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_1")
         .send({ number: 5 })
         .end((err, res) => {
@@ -90,7 +90,7 @@ describe("Organized Batches", () => {
     it("should POST third value of batch 3 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_3")
         .send({ number: 14 })
         .end((err, res) => {
@@ -102,7 +102,7 @@ describe("Organized Batches", () => {
     it("should POST second value of batch 2 successfully", (done) => {
       chai
         .request(server)
-        .post("/batches")
+        .post("/batch-data")
         .set("batch_id", "BATCH_ID_2")
         .send({ number: 101 })
         .end((err, res) => {
@@ -221,8 +221,8 @@ describe("Organized Batches", () => {
           size: 8,
         })
         .end((err, res) => {
-          expect(res.body.organizedBatches.length).to.equal(8);
-          expect(res.body.organizedBatches).to.have.ordered.members([
+          expect(res.body.items.length).to.equal(8);
+          expect(res.body.items).to.have.ordered.members([
             1, 5, 9, 101, 103, 13, 14, 18,
           ]);
           done();
@@ -237,8 +237,8 @@ describe("Organized Batches", () => {
           size: 2,
         })
         .end((err, res) => {
-          expect(res.body.organizedBatches.length).to.equal(2);
-          expect(res.body.organizedBatches).to.have.ordered.members([103, 13]);
+          expect(res.body.items.length).to.equal(2);
+          expect(res.body.items).to.have.ordered.members([103, 13]);
           done();
         });
     });
