@@ -38,7 +38,22 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "Data 'number' doesn't exist in body. Sample body: { number: <integer_val> }"
+            "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }"
+          );
+          done();
+        });
+    });
+    it("should POST batch data and response bad request when number field is not a number", (done) => {
+      chai
+        .request(server)
+        .post("/batch-data")
+        .send({ number: "NaN" })
+        .set("batch_id", "BATCH_ID_1")
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.errors.length).to.equal(1);
+          expect(res.body.errors[0]).to.equal(
+            "The value of data 'number' must be type of number. Sample body: { number: <number_val> }"
           );
           done();
         });
@@ -51,7 +66,7 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(2);
           expect(res.body.errors).to.have.members([
-            "Data 'number' doesn't exist in body. Sample body: { number: <integer_val> }",
+            "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }",
             "Batch ID doesn't exist in header with the key 'batch_id'. Sample header: batch_id=<string_val>",
           ]);
           done();

@@ -15,6 +15,19 @@ describe("Organized Batches", () => {
     done();
   });
   describe("/POST batches", () => {
+    it("should GET empty organized batches response correctly", (done) => {
+      chai
+        .request(server)
+        .get("/batches/organized")
+        .end((err, res) => {
+          expect(res.body.items.length).to.equal(0);
+          expect(res.body.items).to.have.members([]);
+          expect(res.body.total).to.eq(0);
+          expect(res.body.size).to.eq(0);
+          expect(res.body.page).to.eq(0);
+          done();
+        });
+    });
     it("should POST first value of batch 1 successfully", (done) => {
       chai
         .request(server)
@@ -225,6 +238,9 @@ describe("Organized Batches", () => {
           expect(res.body.items).to.have.ordered.members([
             1, 5, 9, 101, 103, 13, 14, 18,
           ]);
+          expect(res.body.total).to.eq(8);
+          expect(res.body.size).to.eq(8);
+          expect(res.body.page).to.eq(0);
           done();
         });
     });
@@ -239,6 +255,9 @@ describe("Organized Batches", () => {
         .end((err, res) => {
           expect(res.body.items.length).to.equal(2);
           expect(res.body.items).to.have.ordered.members([103, 13]);
+          expect(res.body.total).to.eq(8);
+          expect(res.body.size).to.eq(2);
+          expect(res.body.page).to.eq(2);
           done();
         });
     });

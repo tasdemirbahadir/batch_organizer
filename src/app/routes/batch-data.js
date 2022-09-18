@@ -12,18 +12,18 @@ const getBatchDatas = (req, res) => {
     return;
   }
 
-  const page = req.query.page ? req.query.page : DEFAULT_PAGE;
-  const limit = req.query.size ? req.query.size : DEFAULT_PAGE_SIZE;
+  const page = Number(req.query.page ? req.query.page : DEFAULT_PAGE);
+  const limit = Number(req.query.size ? req.query.size : DEFAULT_PAGE_SIZE);
   const offset = page * limit;
   batchDataModel.paginate({}, { offset, limit }).then(
     (result) => {
-      const response = {
+      const page = result.offset / result.limit
+      res.json({
         items: result.docs,
         total: result.total,
-        size: result.limit,
-        page: result.offset / result.limit,
-      };
-      res.json(response);
+        size: result.docs.length,
+        page,
+      });
     },
     (err) => {
       console.error("Error occured: ", err);
@@ -113,7 +113,11 @@ const getPostBatchBadRequestErrors = (req) => {
   }
   if (!req.body.number) {
     badRequestErrors.push(
-      "Data 'number' doesn't exist in body. Sample body: { number: <integer_val> }"
+      "Data 'number' doesn't exist in body. Sample body: { number: <number_val> }"
+    );
+  } else if (isNaN(req.body.number)) {
+    badRequestErrors.push(
+      "The value of data 'number' must be type of number. Sample body: { number: <number_val> }"
     );
   }
   return badRequestErrors;

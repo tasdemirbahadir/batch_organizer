@@ -11,26 +11,43 @@ const getOrganizedBatches = (req, res) => {
     return;
   }
 
-  const page = req.query.page ? req.query.page : DEFAULT_PAGE;
-  const limit = req.query.size ? req.query.size : DEFAULT_PAGE_SIZE;
-  const offset = page * limit;
+  const page = Number(req.query.page ? req.query.page : DEFAULT_PAGE);
+  const limit = Number(req.query.size ? req.query.size : DEFAULT_PAGE_SIZE);
+  const skip = page * limit;
   organizedBatchesModel
-    .findOne({}, { values: { $slice: [Number(offset), Number(limit)] } })
+    .aggregate()
+    .allowDiskUse(true)
+    .unwind({ path: "$values" })
+    .group({
+      _id: null,
+      total: { $sum: 1 },
+      data: { $push: "$values" },
+    })
+    .project({
+      total: 1,
+      items: { $slice: ["$data", skip, limit] },
+    })
     .exec()
     .then(
       (organizedBatches) => {
-        if (!organizedBatches) {
+        if (!organizedBatches || !organizedBatches.length) {
           res.status(200);
-          res.json({ message: "Currently there aren't any batches" });
+          res.json({
+            items: [],
+            total: 0,
+            size: 0,
+            page: 0,
+          });
         } else {
           res.status(200);
           organizedBatches = JSON.parse(JSON.stringify(organizedBatches));
-          const response = {
-            items: organizedBatches.values,
-            page: offset / limit,
-            size: organizedBatches.values.length,
-          };
-          res.json(response);
+          const page = skip / limit;
+          res.json({
+            items: organizedBatches[0].items,
+            total: organizedBatches[0].total,
+            size: organizedBatches[0].items.length,
+            page: page,
+          });
         }
       },
       (err) => {
