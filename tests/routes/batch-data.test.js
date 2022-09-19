@@ -19,17 +19,17 @@ describe("Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .send({ number: 1 })
+        .send({ value: 1 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
+            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }"
           );
           done();
         });
     });
-    it("should POST batch data and response bad request when number field is missing in body", (done) => {
+    it("should POST batch data and response bad request when value field is missing in body", (done) => {
       chai
         .request(server)
         .post("/batch-data")
@@ -38,26 +38,26 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
+            "Data 'value' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }"
           );
           done();
         });
     });
-    it("should POST batch data and response bad request when number field is not a number", (done) => {
+    it("should POST batch data and response bad request when value field is not a number", (done) => {
       chai
         .request(server)
         .post("/batch-data")
-        .send({ batchId: "BATCH_ID", number: "NaN" })
+        .send({ batchId: "BATCH_ID", value: "NaN" })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(1);
           expect(res.body.errors[0]).to.equal(
-            "The value of data 'number' must be type of number. Sample body: { batchId: <string_val>, number: <number_val> }"
+            "The value of data 'value' must be type of number. Sample body: { batchId: <string_val>, value: <number_val> }"
           );
           done();
         });
     });
-    it("should POST batch data and response bad request errors when number field is missing in body and batch id is missing in body", (done) => {
+    it("should POST batch data and response bad request errors when value field is missing in body and batch id is missing in body", (done) => {
       chai
         .request(server)
         .post("/batch-data")
@@ -65,8 +65,8 @@ describe("Batches", () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.errors.length).to.equal(2);
           expect(res.body.errors).to.have.members([
-            "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }",
-            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }",
+            "Data 'value' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }",
+            "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }",
           ]);
           done();
         });
@@ -75,7 +75,7 @@ describe("Batches", () => {
       chai
         .request(server)
         .post("/batch-data")
-        .send({ batchId: "BATCH_ID_1", number: 1 })
+        .send({ batchId: "BATCH_ID_1", value: 1 })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body.result).to.equal("SUCCESS");

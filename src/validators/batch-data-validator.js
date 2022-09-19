@@ -28,16 +28,16 @@ const validatePostRequest = (request, response, next) => {
   let badRequestErrors = [];
   if (!request.body.batchId) {
     badRequestErrors.push(
-      "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
+      "Data 'batchId' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }"
     );
   }
-  if (!request.body.number) {
+  if (!request.body.value) {
     badRequestErrors.push(
-      "Data 'number' doesn't exist in body. Sample body: { batchId: <string_val>, number: <number_val> }"
+      "Data 'value' doesn't exist in body. Sample body: { batchId: <string_val>, value: <number_val> }"
     );
-  } else if (isNaN(request.body.number)) {
+  } else if (isNaN(request.body.value)) {
     badRequestErrors.push(
-      "The value of data 'number' must be type of number. Sample body: { batchId: <string_val>, number: <number_val> }"
+      "The value of data 'value' must be type of number. Sample body: { batchId: <string_val>, value: <number_val> }"
     );
   }
   validate(badRequestErrors, response, next);

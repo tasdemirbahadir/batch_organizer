@@ -9,7 +9,7 @@ const getBatchDatas = (request) => {
 const postBatchData = (request) => {
   const batchData = {
     batch_id: request.body.batchId,
-    value: Number(request.body.number),
+    value: Number(request.body.value),
     time: new Date(),
   }
   return batchDataService.postBatchData(batchData);
