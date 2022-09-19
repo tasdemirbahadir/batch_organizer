@@ -7,7 +7,7 @@ const router = Router();
 
 router.get(
   "/batches/organized",
-  organizedBatchesValidator.validateGetOrganizedBatchesRequestErrors,
+  organizedBatchesValidator.validateGetRequest,
   handleResponse(organizedBatchesController.getOrganizedBatches)
 );
 

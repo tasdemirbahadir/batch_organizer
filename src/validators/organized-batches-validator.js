@@ -1,6 +1,6 @@
 import {validate} from "./validator";
 
-const validateGetOrganizedBatchesRequestErrors = (request, response, next) => {
+const validateGetRequest = (request, response, next) => {
   let badRequestErrors = [];
   if (request.query.size) {
     if (isNaN(request.query.size)) {
@@ -19,4 +19,4 @@ const validateGetOrganizedBatchesRequestErrors = (request, response, next) => {
   validate(badRequestErrors, response, next);
 };
 
-module.exports = { validateGetOrganizedBatchesRequestErrors };
+module.exports = { validateGetRequest };

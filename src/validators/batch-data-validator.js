@@ -1,6 +1,6 @@
 import {validate} from "./validator";
 
-const validateGetBatchesBadRequestErrors = (request, response, next) => {
+const validateGetRequest = (request, response, next) => {
   let badRequestErrors = [];
   if (request.query.size) {
     if (isNaN(request.query.size)) {
@@ -24,7 +24,7 @@ const validateGetBatchesBadRequestErrors = (request, response, next) => {
   validate(badRequestErrors, response, next);
 };
 
-const validatePostBatchBadRequestErrors = (request, response, next) => {
+const validatePostRequest = (request, response, next) => {
   let badRequestErrors = [];
   if (!request.body.batchId) {
     badRequestErrors.push(
@@ -44,6 +44,6 @@ const validatePostBatchBadRequestErrors = (request, response, next) => {
 };
 
 module.exports = {
-  validateGetBatchesBadRequestErrors,
-  validatePostBatchBadRequestErrors,
+  validateGetRequest,
+  validatePostRequest,
 };

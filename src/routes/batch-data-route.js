@@ -7,12 +7,12 @@ const router = Router();
 
 router.get(
   "/batch-data",
-  batchDataValidator.validateGetBatchesBadRequestErrors,
+  batchDataValidator.validateGetRequest,
   handleResponse(batchDataCountroller.getBatchDatas)
 );
 router.post(
   "/batch-data",
-  batchDataValidator.validatePostBatchBadRequestErrors,
+  batchDataValidator.validatePostRequest,
   handleResponse(batchDataCountroller.postBatchData)
 );
 
