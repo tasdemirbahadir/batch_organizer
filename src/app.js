@@ -7,6 +7,9 @@ const init = () => {
   const app = express();
   app.use(bodyParser.json());
   app.use(bodyParser.json({ type: "application/json" }));
+  app.get("/", (req, res) =>
+    res.json({ message: "Welcome to the Batch Organizer!!" })
+  );
   Object.values(routes).forEach(route => app.use("/", route));
   const server = app.listen(config.get("port"), () => {
     console.log(
