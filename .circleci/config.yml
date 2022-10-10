@@ -24,11 +24,8 @@ jobs:
               nohup yarn serve 1>/dev/null 2>/dev/null &"
 
 workflows:
-  test-and-deploy:
+  test:
     jobs:
       - node/test:
           version: '16.10'
           pkg-manager: yarn
-      - deploy:
-          requires:
-            - node/test
