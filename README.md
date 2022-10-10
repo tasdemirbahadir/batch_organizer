@@ -18,10 +18,6 @@
 
 `sh env/teardown.sh;`
 
-## Production Environment
-
-- <http://52.32.105.241:3000>
-
 ## Validate circle-ci config
 
 1) Install circleci validation tool here <https://circleci.com/docs/local-cli>
